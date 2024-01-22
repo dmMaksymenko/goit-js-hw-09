@@ -17,32 +17,34 @@ function loadFromLS(key) {
   }
 }
 
-form.addEventListener('input', e => {
+function getFormData() {
   const userEmail = form.elements.email.value.trim();
   const userMessage = form.elements.message.value.trim();
 
-  const data = {
+  return {
     email: userEmail,
     message: userMessage,
   };
+}
+
+form.addEventListener('input', e => {
+  const data = getFormData();
   saveToLS(STORAGE_KEY, data);
 });
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const userEmail = form.elements.email.value.trim();
-  const userMessage = form.elements.message.value.trim();
+  const data = getFormData();
 
-  if (userEmail === '' || userMessage === '') {
+  if (data.email === '' || data.message === '') {
     alert('Please fill out all fields.');
     return;
   }
 
-  const data = loadFromLS(STORAGE_KEY) || {};
-  console.log(data);
-
   localStorage.removeItem(STORAGE_KEY);
   form.reset();
+
+  console.log(data);
 });
 
 function loadDataToForm() {
