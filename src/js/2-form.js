@@ -18,8 +18,8 @@ function loadFromLS(key) {
 }
 
 form.addEventListener('input', e => {
-  const userEmail = form.elements.email.value;
-  const userMessage = form.elements.message.value;
+  const userEmail = form.elements.email.value.trim();
+  const userMessage = form.elements.message.value.trim();
 
   const data = {
     email: userEmail,
@@ -30,6 +30,13 @@ form.addEventListener('input', e => {
 
 form.addEventListener('submit', e => {
   e.preventDefault();
+  const userEmail = form.elements.email.value.trim();
+  const userMessage = form.elements.message.value.trim();
+
+  if (userEmail === '' || userMessage === '') {
+    alert('Please fill out all fields.');
+    return;
+  }
 
   const data = loadFromLS(STORAGE_KEY) || {};
   console.log(data);
